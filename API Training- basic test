@@ -1,22 +1,22 @@
 {
 	"info": {
-		"_postman_id": "10cee5c5-fa5f-41d3-9a7c-41ba2c6bbd1c",
-		"name": "API Training: First API Test",
+		"_postman_id": "5947533c-8806-4545-a223-0844d4e2a011",
+		"name": "API Collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get Status",
+			"name": "Get All Todo Entries",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code should be 200\", function () {\r",
-							"pm.test(\"Status code name should have a string\", function () {\r",
-							"    pm.response.to.have.status(\"OK\");\r",
+							"pm.test(\"Status code should be 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
 							"});\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Status code name should have a Not Found string\", function () {\r",
+							"    pm.response.to.have.status(\"Not Found\");\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -27,64 +27,111 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://Www.Getpostman.Com/Collections/Cdb092e261ebfa78f493",
+					"raw": "https://demo.fusio-project.org/index.php/todo",
 					"protocol": "https",
 					"host": [
-						"Www",
-						"Getpostman",
-						"Com"
+						"demo",
+						"fusio-project",
+						"org"
 					],
 					"path": [
-						"Collections",
-						"Cdb092e261ebfa78f493"
+						"index.php",
+						"todo"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Register an API Client",
+			"name": "Get All Entries",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
 						"exec": [
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"Status code name has string Created\", function () {\r",
-							"    pm.response.to.have.status(\"Created\");\r",
-							"});"
-						]
+							"pm.test(\"Status code name should have an OK string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"    pm.test(\"Confirm that categories is ['authorization', 'system', 'consumer', 'backend', 'default'] \", function () {\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(jsonData.categories).to.eql([\"authorization\", \"system\", \"consumer\", \"backend\", \"default\"]);\r",
+							"    });\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"authorization\", \"system\", \"consumer\", \"backend\", \"default\");\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"documentation\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.above(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202]);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(jsonData)\r",
+							"console.log(jsonData.scopes)\r",
+							"console.log(jsonData.categories)"
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n   \"clientName\": \"Princess\",\n   \"clientEmail\": \"princess4@mailinator.com\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "https://simple-books-api.glitch.me/api-clients/",
+					"raw": "https://demo.fusio-project.org/index.php/",
 					"protocol": "https",
 					"host": [
-						"simple-books-api",
-						"glitch",
-						"me"
+						"demo",
+						"fusio-project",
+						"org"
 					],
 					"path": [
-						"api-clients",
+						"index.php",
 						""
 					]
-				}
+				},
+				"description": "https://demo.fusio-project.org/index.php/"
+			},
+			"response": []
+		},
+		{
+			"name": "Get entry per ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://demo.fusio-project.org/index.php/todo/?todo_id=2",
+					"protocol": "https",
+					"host": [
+						"demo",
+						"fusio-project",
+						"org"
+					],
+					"path": [
+						"index.php",
+						"todo",
+						""
+					],
+					"query": [
+						{
+							"key": "todo_id",
+							"value": "2"
+						}
+					]
+				},
+				"description": "https://demo.fusio-project.org/index.php/todo/:todo_id"
 			},
 			"response": []
 		},
@@ -154,12 +201,46 @@
 			"response": []
 		},
 		{
-			"name": "Get a single book",
+			"name": "Place a book order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const OrderId = pm.response.json();\r",
+							"\r",
+							"console.log(OrderId.orderId);\r",
+							"pm.globals.set(\"OrderId\", OrderId.orderId);\r",
+							""
+						]
+					}
+				}
+			],
 			"request": {
-				"method": "GET",
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "03c5abfe090876ab74a2a2ac4c079174a35fd88c9b88cd2164ff4b9d56c31d6c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"bookId\": 1,\n  \"customerName\": \"John\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "https://simple-books-api.glitch.me/books/:bookId",
+					"raw": "https://simple-books-api.glitch.me/orders",
 					"protocol": "https",
 					"host": [
 						"simple-books-api",
@@ -167,21 +248,7 @@
 						"me"
 					],
 					"path": [
-						"books",
-						":bookId"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": "",
-							"disabled": true
-						}
-					],
-					"variable": [
-						{
-							"key": "bookId",
-							"value": "{{bookId}}"
-						}
+						"orders"
 					]
 				}
 			},
@@ -219,7 +286,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"bookId\": {{bookId}},\n  \"customerName\": \"John\"\n}",
+					"raw": "{\n  \"bookId\": 1,\n  \"customerName\": \"John\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -336,54 +403,7 @@
 					"variable": [
 						{
 							"key": "orderId",
-							"value": "qxzS1B9A1BHx64GTssixy"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update an order",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "03c5abfe090876ab74a2a2ac4c079174a35fd88c9b88cd2164ff4b9d56c31d6c",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://simple-books-api.glitch.me/orders/:orderId/",
-					"protocol": "https",
-					"host": [
-						"simple-books-api",
-						"glitch",
-						"me"
-					],
-					"path": [
-						"orders",
-						":orderId",
-						""
-					],
-					"variable": [
-						{
-							"key": "orderId",
-							"value": "{{OrderId}}"
+							"value": "bl8ZbxUCq59bH8DyYWvjo"
 						}
 					]
 				}
@@ -446,7 +466,7 @@
 					"variable": [
 						{
 							"key": "orderId",
-							"value": "{{OrderId}}"
+							"value": "bl8ZbxUCq59bH8DyYWvjo"
 						}
 					]
 				}
