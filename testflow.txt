@@ -1,0 +1,12 @@
+/** test for login flow for Jumia
+ 1. Open your Chrome browser
+ 2. Input your Jumia page URL (https://www.jumia.com.ng)
+ 3. Maximize the window
+ 4. Click on the Account button
+ 5. Click on the sign-in button
+ 6. Input your email address
+ 7. Input your password
+ 8. Click on the login button
+ 9. Click on the Account button
+ 10. Logout from the account
+ 11. Quit the browser.
